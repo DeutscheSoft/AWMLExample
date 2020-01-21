@@ -1,0 +1,145 @@
+<head>
+    <title>AWML Example</title>
+    <link id='style' rel=stylesheet href='toolkit/toolkit/styles/toolkit.css'>
+    <link rel="stylesheet" href="fonts/AWMLExample.css">
+    <link rel="stylesheet" href="css/AWMLExample.css">
+    <link rel="stylesheet" href="fonts/Pragati.css">
+            
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+    <meta charset="UTF-8">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+        
+    <link rel="apple-touch-icon" sizes="57x57" href="images/favicons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="images/favicons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/favicons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="images/favicons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/favicons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="images/favicons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/favicons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/favicons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="images/favicons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="images/favicons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicons/favicon-16x16.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="msapplication-TileColor" content="ffffff">
+    <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="ffffff">
+    
+    <script src="toolkit/toolkit/polyfill/raf.js"></script>
+    <script src="toolkit/toolkit/G.js"></script>
+    <script src="toolkit/toolkit/toolkit.js"></script>
+    <script src="toolkit/toolkit/implements/base.js"></script>
+    <script src="toolkit/toolkit/implements/audiomath.js"></script>
+    <script src="toolkit/toolkit/implements/anchor.js"></script>
+    <script src="toolkit/toolkit/implements/ranges.js"></script>
+    <script src="toolkit/toolkit/implements/globalcursor.js"></script>
+    <script src="toolkit/toolkit/implements/ranged.js"></script>
+    <script src="toolkit/toolkit/implements/warning.js"></script>
+    <script src="toolkit/toolkit/implements/gradient.js"></script>
+    <script src="toolkit/toolkit/implements/notes.js"></script>
+    <script src="toolkit/toolkit/widgets/colors.js"></script>
+    <script src="toolkit/toolkit/widgets/widget.js"></script>
+    <script src="toolkit/toolkit/widgets/icon.js"></script>
+    <script src="toolkit/toolkit/widgets/label.js"></script>
+    <script src="toolkit/toolkit/widgets/tooltips.js"></script>
+    <script src="toolkit/toolkit/modules/dragcapture.js"></script>
+    <script src="toolkit/toolkit/modules/grid.js"></script>
+    <script src="toolkit/toolkit/modules/range.js"></script>
+    <script src="toolkit/toolkit/modules/scale.js"></script>
+    <script src="toolkit/toolkit/modules/scrollvalue.js"></script>
+    <script src="toolkit/toolkit/modules/graph.js"></script>
+    <script src="toolkit/toolkit/modules/circular.js"></script>
+    <script src="toolkit/toolkit/modules/filter.js"></script>
+    <script src="toolkit/toolkit/modules/resize.js"></script>
+    <script src="toolkit/toolkit/modules/responsehandle.js"></script>
+    <script src="toolkit/toolkit/modules/eqband.js"></script>
+    <script src="toolkit/toolkit/modules/dragvalue.js"></script>
+    <script src="toolkit/toolkit/modules/drag.js"></script>
+    <script src="toolkit/toolkit/widgets/container.js"></script>
+    <script src="toolkit/toolkit/widgets/root.js"></script>
+    <script src="toolkit/toolkit/widgets/button.js"></script>
+    <script src="toolkit/toolkit/widgets/value.js"></script>
+    <script src="toolkit/toolkit/widgets/valuebutton.js"></script>
+    <script src="toolkit/toolkit/widgets/buttonarray.js"></script>
+    <script src="toolkit/toolkit/widgets/clock.js"></script>
+    <script src="toolkit/toolkit/widgets/state.js"></script>
+    <script src="toolkit/toolkit/widgets/pager.js"></script>
+    <script src="toolkit/toolkit/widgets/expander.js"></script>
+    <script src="toolkit/toolkit/widgets/meterbase.js"></script>
+    <script src="toolkit/toolkit/widgets/levelmeter.js"></script>
+    <script src="toolkit/toolkit/widgets/chart.js"></script>
+    <script src="toolkit/toolkit/widgets/dynamics.js"></script>
+    <script src="toolkit/toolkit/widgets/gauge.js"></script>
+    <script src="toolkit/toolkit/widgets/frequencyresponse.js"></script>
+    <script src="toolkit/toolkit/widgets/responsehandler.js"></script>
+    <script src="toolkit/toolkit/widgets/equalizer.js"></script>
+    <script src="toolkit/toolkit/widgets/fader.js"></script>
+    <script src="toolkit/toolkit/widgets/knob.js"></script>
+    <script src="toolkit/toolkit/widgets/valueknob.js"></script>
+    <script src="toolkit/toolkit/widgets/select.js"></script>
+    <script src="toolkit/toolkit/widgets/window.js"></script>
+    <script src="toolkit/toolkit/widgets/toggle.js"></script>
+    <script src="toolkit/toolkit/widgets/multimeter.js"></script>
+    
+    <script src="AWML/awml.js"></script>
+    <script src="AWML/awml.bindings.js"></script>
+    <script src="AWML/awml.backends.js"></script>
+    <script src="AWML/awml.electron.js"></script>
+    <script src="AWML/awml.styles.js"></script>
+    <script src="AWML/awml.templates.js"></script>
+    
+    <script src="js/AWMLExample.js"></script>
+    
+    <awml-backend name=local type=local>
+    {
+        
+    }
+    </awml-backend>
+</head>
+<body>
+    <awml-root id=root>
+        
+        <awml-options widget="awml-button" layout="horizontal"></awml-options>
+        <awml-options widget="awml-toggle" layout="horizontal"></awml-options>
+        
+        <awml-options name="knob"
+            label='js:{margin: 15, align: "outer", format: TK.FORMAT("%d")}'
+            hand='js:{margin: 27, width: 4, length: 8}'
+            margin=12
+            thickness=4
+            ></awml-options>
+        
+        <awml-options name="knob_small" options="knob"
+            class="small"
+            label='js:{margin: 17, align: "outer", format: TK.FORMAT("%d")}'
+            hand='js:{margin: 26, width: 4, length: 8}'
+            margin=12
+            thickness=5
+            ></awml-options>
+        
+        <awml-options name="knob_medium" options="knob"
+            class="medium"
+            ></awml-options>
+        
+        <awml-options name="knob_big" options="knob"
+            class="big"
+            label='js:{margin: 12, align: "outer", format: TK.FORMAT("%d")}'
+            hand='js:{margin: 24, width: 3, length: 6}'
+            margin=10
+            thickness=3
+            ></awml-options>
+        
+        <awml-options name="knob_huge" options="knob"
+            class="huge"
+            label='js:{margin: 7, align: "outer", format: TK.FORMAT("%d")}'
+            hand='js:{margin: 17, width: 2, length: 5}'
+            margin=7
+            thickness=2.5
+            ></awml-options>
+            
+        
+    </awml-root>
+</body>
