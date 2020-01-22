@@ -14,3 +14,5 @@ python -m SimpleHTTPServer
 ```
 
 Point your browser to `localhost:8000` to open the UI. In Firefox or Chrome/Chromium hit `F12` to open the developers tools to investigate the structure. Use your editor to see all comments added to the code. Start with `index.html`, `strip.html`, `local.json` and `styles.css`.
+
+Follow-up to this example could be an investigation of http://demo.deuso.de/ISE2016/index.html
