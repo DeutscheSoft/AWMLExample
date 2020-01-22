@@ -1,0 +1,241 @@
+/*
+ * Reset all standard HTML elements to get rid of unwanted formatting
+ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+
+/* BODY and HTML */
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: fixed;
+    overflow: hidden;
+    
+    background-color: rgb(230, 230, 230);
+    color: #333;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+/* MAIN LAYOUT */
+
+.toolkit-root {
+    /* Fix the root element to the browsers window  */
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+    /* Use some narrow font to save space in the UI */
+    font-family: Pragati,sans-serif !important;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    white-space: nowrap;
+    
+    /* center all strips */
+    text-align: center;
+}
+.toolkit-root::before {
+    /* We want the content to be vertically centered, too, so add
+     * this work-around to not use (highly expensive) flexbox or grid
+     * for this simple task */
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+.panel {
+    /* Again, to save some CPU we'll inline all strips inside this
+     * element instead of using flex. To not have any spaces between
+     * the strips, set font size to 0 */
+    font-size: 0;
+    /* Act as inline to get centered inside the root element */
+    display: inline-block;
+    /* Counterpart of the work-around above */
+    vertical-align: middle;
+    /* Size of the container */
+    width: 100%;
+    max-width: 1280px;
+    height: 100%;
+    max-height: 600px;
+}
+.strip {
+    /* Re-set the font size to the bodies font size */
+    font-size: 1rem;
+    /* Eight strips with margin... */
+    width: calc(12.5% - 8px);
+    /* Size of each strip */
+    min-width: 80px;
+    height: 100%;
+    /* line them up */
+    display: inline-block;
+    
+    margin: 0 4px;
+    
+    /* Enable positioning for fixatingg widgets with absolute positioning */
+    position: relative;
+}
+.strip:last-child {
+    /* No right margin for the right-most strip */
+    margin-right: 0;
+}
+.strip::after {
+    /* Use a pseudo-element to add a line between the channel strips */
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -4px;
+    bottom: 0;
+    width: 1px;
+    background: #cccccc;
+}
+.strip:last-child::after {
+    /* Last strip has no line next to it */
+    display: none;
+}
+.strip > .top {
+    /* Top-most container holding the equalizer (and its expander) */
+    width: 100%;
+    height: 96px;
+}
+.strip > .mid {
+    /* This container uses all the remaining space between the equalizer
+     * and the label at the bottom.
+     * Again, good old, CPU-friendly absolute positioning instead of
+     * grid or flexbox */
+    position: absolute;
+    top: 112px;
+    bottom: 48px;
+    left: 0;
+    right: 0;
+}
+.strip > .bottom {
+    /* Container for the strip number and the title, attached to the
+     * bottom of each strip */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+}
+
+
+/* TOOLKIT */
+
+.toolkit-equalizer {
+    /* EQ should cover the full width of a strip at a fixed height */
+    width: 100%;
+    height: 96px;
+}
+.toolkit-expander.toolkit-expanded .toolkit-equalizer {
+    /* If opened in the expander, it should have 100% height, too */
+    height: 100%;
+}
+
+.toolkit-fader {
+    /* Faders are attached to the scaling area of the strip. This
+     * makes them scale automatically with the height of the strip
+     * and moves them to the left hand side of the center of the strip
+     * by transformation */
+    position: absolute;
+    top: 0;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-100%);
+}
+.toolkit-level-meter {
+    /* Same with the level meter - we add some pixels to make its bar
+     * the same height as the fader to only have one scale for fader and
+     * meter */
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    bottom: 20px;
+}
+.toolkit-level-meter .toolkit-state {
+    /* Make the state widget fit the bars height */
+    width: 16px;
+}
+.toolkit-meter-base {
+    padding: 0;
+}
+.toolkit-value > .toolkit-input {
+    /* Make the value widget fit its container in height */
+    height: 40px;
+    line-height: 40px;
+}
+.toolkit-widget {
+    /* Toolkit tries to maximize performance whereever possible. By
+     * default all widgets are treated as self-contained elements not
+     * connected to any other widget around layout-wise. This is done
+     * by using the contain directive with "layout style" by default.
+     * In return widgets inside widgets don't have any connection to the
+     * browser window anymore, so trying to scale the expander to
+     * full-screen from within a container attaches it to its parent
+     * instead of the viewport. We need to reset it to just "style" */
+    contain: style;
+}
+
+
+/* DEDICATED */
+
+.num {
+    /* Number of the strip. Yes, this in fact *is* design. But. */
+    width: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    vertical-align: middle;
+    color: #cccccc;
+}
+.strip > .bottom > .toolkit-value {
+    /* Make the value widget use the remaining space */
+    width: calc(100% - 20px);
+}

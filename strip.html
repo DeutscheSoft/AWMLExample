@@ -1,0 +1,124 @@
+<awml-container class="top">
+    
+    <!-- The expander widget is used for hiding/displaying/styling
+    its children on two different states, 'collapsed' and 'expanded'.
+    In this case we use it to minify the equalizer in collapsed state
+    and expand it inside an overlay on expanded state.
+    
+    See http://docs.deuso.de/Toolkit/TK.Expander.html for more
+    information. -->
+    <awml-expander class="toolkit-popup" expanded=false>
+        
+        <!-- The equalizer widget. See http://docs.deuso.de/Toolkit/TK.Equalizer.html
+        for more information.
+        
+        The collapsed attribute states that the EQ is drawn when the
+        expander is in collapsed state, too. -->
+        <awml-equalizer prefix="equalizer/" collapsed>
+            <awml-filter prefix="bands/1/"
+                title="Param#1"
+                type=parametric>
+                <!-- AWML bindings are used to bind widgets options to
+                any kind of back-end.
+                
+                To read more about <awml-option> 
+                and is other purposes please refer to the README inside
+                the AWML submodule. -->
+                <awml-option type=bind name=freq src=freq></awml-option>
+                <awml-option type=bind name=gain src=gain></awml-option>
+                <awml-option type=bind name=q src=q></awml-option>
+            </awml-filter>
+            <awml-filter prefix="bands/2/"
+                title="Param#2"
+                type=parametric>
+                <awml-option type=bind name=freq src=freq></awml-option>
+                <awml-option type=bind name=gain src=gain></awml-option>
+                <awml-option type=bind name=q src=q></awml-option>
+            </awml-filter>
+            <awml-filter prefix="bands/3/"
+                title="Param#3"
+                type=parametric>
+                <awml-option type=bind name=freq src=freq></awml-option>
+                <awml-option type=bind name=gain src=gain></awml-option>
+                <awml-option type=bind name=q src=q></awml-option>
+            </awml-filter>
+            <awml-filter prefix="bands/4/"
+                title="Param#4"
+                type=parametric>
+                <awml-option type=bind name=freq src=freq></awml-option>
+                <awml-option type=bind name=gain src=gain></awml-option>
+                <awml-option type=bind name=q src=q></awml-option>
+            </awml-filter>
+        </awml-equalizer>
+    </awml-expander>
+    
+</awml-container>
+
+<!-- this container holds the scaling widgets using the remaining
+space inside a strip. -->
+<awml-container class="mid">
+    <!-- The fader hides its scale because the scale from the level
+    meter should be enough in this example. See the custom CSS file.
+    
+    To read more about the fader widget, please refer to
+    http://docs.deuso.de/Toolkit/TK.Fader.html -->
+    <awml-fader
+        min=-96
+        max=12
+        show_scale=false>
+        <!-- Here we bind to the level parameter of the strip which is
+        used by the following level meter, too. So dragging the fader is
+        reflected in the level meter (with the 300ms delay set in the
+        local backend). -->
+        <awml-option type=bind name=value src=level></awml-option>
+    </awml-fader>
+    
+    <!-- The level meter widget has the same min and max as the fader
+    so we can use its scale for both widgets. It comes with a clipping
+    LED on top showing values above 0dB with a 2 second hold time.
+    
+    To read more about the fader widget, please refer to
+    http://docs.deuso.de/Toolkit/TK.LevelMeter.html -->
+    <awml-levelmeter
+        min=-96
+        max=12
+        show_clip=true
+        auto_clip=2000
+        clipping=0
+        scale.levels="js:[1,3,6,12]"
+        scale.base=0
+        state.color="#FF3B00"
+        format_labels="js:function (v) { return parseInt(v); }"
+        gradient="js:{'-96':'#00ccff','-12':'#FFD000','12':'#FF3B00'}">
+        <!-- This binding connects the fader with the level meter. -->
+        <awml-option type=bind name=value src=level></awml-option>
+    </awml-levelmeter>
+    
+</awml-container>
+
+<awml-container class="bottom">
+    
+    <!-- The label displaying the strips index. The index comes from
+    the local back-end, too.
+    
+    To read more about the label widget, please refer to
+    http://docs.deuso.de/Toolkit/TK.Label.html -->
+    <awml-label class="num">
+        <awml-option type=bind name=label src=num></awml-option>
+    </awml-label>
+    
+    <!-- And finally the title of the strip, editable by the user.
+    Since this widget normally display numerical values, the attributes
+    'format' and 'set' ensure that strings are used internally and
+    externally.
+    
+    To learn more about the value widget, please refer to
+    http://docs.deuso.de/Toolkit/TK.Value.html -->
+    <awml-value 
+        format="js:function (v) { return v+''; }"
+        set="js:function (v) { return v+''; }"
+        auto_select=true>
+        <awml-option type=bind name=value src=label></awml-option>
+    </awml-value>
+    
+</awml-container>

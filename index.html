@@ -1,15 +1,23 @@
 <head>
     <title>AWML Example</title>
-    <link id='style' rel=stylesheet href='toolkit/toolkit/styles/toolkit.css'>
-    <link rel="stylesheet" href="fonts/AWMLExample.css">
-    <link rel="stylesheet" href="css/AWMLExample.css">
-    <link rel="stylesheet" href="fonts/Pragati.css">
-            
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
     <meta charset="UTF-8">
-    
-    <meta name="apple-mobile-web-app-capable" content="yes">
         
+    <!-- Include the default toolkit style "Plain". Its main purpose
+    is to act as a slick development theme and as a base to build
+    custom styles on -->
+    <link id='style' rel=stylesheet href='toolkit/toolkit/styles/plain.css'>
+    
+    <!-- Our (very basic) custom CSS. See the comments. -->
+    <link rel="stylesheet" href="styles.css">
+        
+    <!-- A narrow font -->
+    <link rel="stylesheet" href="fonts/Pragati.css">
+    
+    <!-- Prevent from zooming the interface on touch devices -->
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+    
+    <!-- Some more definitions and icons mainly for mobile devices -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="apple-touch-icon" sizes="57x57" href="images/favicons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="images/favicons/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="images/favicons/apple-icon-72x72.png">
@@ -28,6 +36,9 @@
     <meta name="msapplication-TileImage" content="images/favicons/ms-icon-144x144.png">
     <meta name="theme-color" content="ffffff">
     
+    <!-- Include all JavaScript files from toolkit. For deployment one
+    should generate a minified toolkit version. See the make rules
+    inside the toolkit submodule. -->
     <script src="toolkit/toolkit/polyfill/raf.js"></script>
     <script src="toolkit/toolkit/G.js"></script>
     <script src="toolkit/toolkit/toolkit.js"></script>
@@ -84,6 +95,7 @@
     <script src="toolkit/toolkit/widgets/toggle.js"></script>
     <script src="toolkit/toolkit/widgets/multimeter.js"></script>
     
+    <!-- Include all relevant AWML scripts -->
     <script src="AWML/awml.js"></script>
     <script src="AWML/awml.bindings.js"></script>
     <script src="AWML/awml.backends.js"></script>
@@ -91,55 +103,63 @@
     <script src="AWML/awml.styles.js"></script>
     <script src="AWML/awml.templates.js"></script>
     
-    <script src="js/AWMLExample.js"></script>
+    <!-- let's start with a very simple demo backend. The "local" backend
+    isn't connected to any server or local storage but acts locally
+    inside the current browser tab. This can be used to connect
+    local parameters in a UI to e.g. let a toggle button toggle the
+    visible state of another widget without writing the state to a
+    remote backend.
     
-    <awml-backend name=local type=local>
-    {
-        
-    }
-    </awml-backend>
+    We set some default values in an external JSON file. The content of
+    the external file could be located inside this node directly, too.
+    
+    The delay is added for testing purposes. Faders and level meters are
+    connected via this backend by binding both widgets value option to
+    the same parameter. Level meters now have a 300ms latency when
+    manipulating the corresponding fader.
+    
+    See README in AWML submodule for more information on backends. -->
+    <awml-backend name=local type=local src="local.json" delay=300></awml-backend>
+    
 </head>
 <body>
-    <awml-root id=root>
+    <!-- The toolkit root element. It takes care of handing window
+    resize and visibility events over to all its child nodes.
+    
+    The prefix is placed in front of all src attributes of its children,
+    so an <awml-option type=bind src=foobar> in fact becomes
+    an <awml-option type=bind src="remote:foobar"> in this particular case.
+    
+    Please see the README in the AWML submodule for more information
+    on prefixing. -->
+    <awml-root id=root prefix="local:" trigger-resize>
         
-        <awml-options widget="awml-button" layout="horizontal"></awml-options>
-        <awml-options widget="awml-toggle" layout="horizontal"></awml-options>
-        
-        <awml-options name="knob"
-            label='js:{margin: 15, align: "outer", format: TK.FORMAT("%d")}'
-            hand='js:{margin: 27, width: 4, length: 8}'
-            margin=12
-            thickness=4
-            ></awml-options>
-        
-        <awml-options name="knob_small" options="knob"
-            class="small"
-            label='js:{margin: 17, align: "outer", format: TK.FORMAT("%d")}'
-            hand='js:{margin: 26, width: 4, length: 8}'
-            margin=12
-            thickness=5
-            ></awml-options>
-        
-        <awml-options name="knob_medium" options="knob"
-            class="medium"
-            ></awml-options>
-        
-        <awml-options name="knob_big" options="knob"
-            class="big"
-            label='js:{margin: 12, align: "outer", format: TK.FORMAT("%d")}'
-            hand='js:{margin: 24, width: 3, length: 6}'
-            margin=10
-            thickness=3
-            ></awml-options>
-        
-        <awml-options name="knob_huge" options="knob"
-            class="huge"
-            label='js:{margin: 7, align: "outer", format: TK.FORMAT("%d")}'
-            hand='js:{margin: 17, width: 2, length: 5}'
-            margin=7
-            thickness=2.5
-            ></awml-options>
+        <!-- The container for centering the strips on screen if the
+        window size exceeeds useful boundaries. -->
+        <awml-container class="panel">
             
+            <!-- We manually clone eight strips into this container.
+            This can even be done programatically based on some parameter
+            coming from the backend. See README inside AWML submodule
+            for more information about cloning.
+            
+            The prefixes again add to the src attributes of all children
+            so an <awml-option type=bind src=foobar> in fact becomes
+            an <awml-option type=bind src="remote:strips/1/foobar"> in this
+            particular case.
+            
+            To play around try changing "strips/2/" to "strips/1/" in the
+            second <awml-clone> and see how the first two strips are
+            now working in parallel (with the 300ms delay). -->
+            <awml-clone fetch template="strip.html" class="strip" prefix="strips/1/"></awml-clone>
+            <awml-clone fetch template="strip.html" class="strip" prefix="strips/2/"></awml-clone>
+            <awml-clone fetch template="strip.html" class="strip" prefix="strips/3/"></awml-clone>
+            <awml-clone fetch template="strip.html" class="strip" prefix="strips/4/"></awml-clone>
+            <awml-clone fetch template="strip.html" class="strip" prefix="strips/5/"></awml-clone>
+            <awml-clone fetch template="strip.html" class="strip" prefix="strips/6/"></awml-clone>
+            <awml-clone fetch template="strip.html" class="strip" prefix="strips/7/"></awml-clone>
+            <awml-clone fetch template="strip.html" class="strip" prefix="strips/8/"></awml-clone>
+        </awml-container>
         
     </awml-root>
 </body>

@@ -1,6 +1,6 @@
-[submodule "htdocs/toolkit"]
-	path = htdocs/toolkit
-	url = git@git.deuso.de:toolkit
-[submodule "htdocs/AWML"]
-	path = htdocs/AWML
-	url = git@git.deuso.de:AWML
+[submodule "toolkit"]
+	path = toolkit
+	url = git@github.com:DeutscheSoft/toolkit.git
+[submodule "AWML"]
+	path = AWML
+	url = git@github.com:DeutscheSoft/AWML.git
