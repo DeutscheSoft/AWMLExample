@@ -5,7 +5,7 @@ This project aims to be an entry point into the UI technology stack consisting o
 To investigate clone this repository to your local hard drive, init, sync and update the git submodules (toolkit and AWML) and start a simple webserver in the root directory of the project.
 
 ```
-git clone git@github.com:DeutscheSoft/AWMLExample.git
+git clone https://github.com:DeutscheSoft/AWMLExample.git
 cd AWMLExample
 git submodule init
 git submodule sync
